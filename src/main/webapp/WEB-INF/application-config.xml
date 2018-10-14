@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <mvc:annotation-driven/>
+
+    <context:annotation-config/>
+    <context:spring-configured/>
+    <context:property-placeholder location="classpath*:ethereum-trust-service.properties"/>
+    
+    <bean id="scorer" class="org.ysoft.trust.scorer.PreComputeTrustScorer"></bean>
+    
+    
+    <bean id="web3j" class="org.web3j.protocol.Web3j" factory-method="build"></bean>
+    
+    <bean id="transactionObserver" class="org.ysoft.trust.observer.TransactionObserver" scope="singleton" init-method="init" destroy-method="destroy">
+        <property name="scorer">
+        	<ref bean="scorer"/>
+        </property>
+        <property name="web3j">
+        	<ref bean="web3j"/>
+        </property>
+     </bean>
+    
+    <context:component-scan base-package="org.ysoft.trust.controller"/>
+</beans>
