@@ -42,3 +42,8 @@ geth --rpcapi personal,db,eth,net,web3 --rpc console
 mvn jetty:run
 
 ```
+
+### Obtaining Trust Level
+```
+curl -v 'http://localhost:8080/trustLevels/get.json?sourceAddress=A&destinationAddress=B'
+```
