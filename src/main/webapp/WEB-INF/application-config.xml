@@ -19,7 +19,12 @@
     <bean id="scorer" class="org.ysoft.trust.scorer.PreComputeTrustScorer"></bean>
     
     
-    <bean id="web3j" class="org.web3j.protocol.Web3j" factory-method="build"></bean>
+    <bean id="web3j" class="org.web3j.protocol.Web3j" factory-method="build">
+    	<constructor-arg>
+    		<bean id="web3jHttpService" class="org.web3j.protocol.http.HttpService">
+    		</bean>
+    	</constructor-arg>
+    </bean>
     
     <bean id="transactionObserver" class="org.ysoft.trust.observer.TransactionObserver" scope="singleton" init-method="init" destroy-method="destroy">
         <property name="scorer">
