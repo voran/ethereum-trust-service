@@ -14,7 +14,7 @@ and C has transferred ETH to D then:
 The depth considered can be configured through src/main/resources/ethereum-trust-service.properties.
 
 ### Prerequisites
-This service required Java 8 and Maven.
+This service requires Java 8 and Maven.
 
 ### Building
 ```
