@@ -30,7 +30,7 @@ public class PreComputeTrustScorer implements TrustScorer {
 			sources.put(destination, new HashSet<>());
 		}
 		sources.get(destination).add(source);
-		updateScore(new HashSet<>(), new HashSet<>(), source, destination, 1);
+		updateScore(new HashSet<>(), source, destination, 1);
 	}
 	
 	@Override
@@ -42,7 +42,7 @@ public class PreComputeTrustScorer implements TrustScorer {
 		return source + ":" + destination;
 	}
     
-	private void updateScore(Set<String> visitedSources, Set<String> visitedDestinations, String source, String destination, int hops) {
+	private void updateScore(Set<String> visited, String source, String destination, int hops) {
 		if (hops > maxHops) {
 			return;
 		}
@@ -51,14 +51,14 @@ public class PreComputeTrustScorer implements TrustScorer {
 			scores.put(getCacheKey(source, destination), hops);
 		}
 		
-		if (visitedDestinations.add(destination)) {
+		if (visited.add(destination)) {
 			for (String destinationRecipient : this.recipients.getOrDefault(destination, Collections.emptySet())) {
-				updateScore(visitedSources, visitedDestinations, source, destinationRecipient, hops + 1);
+				updateScore(visited, source, destinationRecipient, hops + 1);
 			}
 		}
-		if (visitedDestinations.add(source)) {
+		if (visited.add(source)) {
 			for (String sourceSource : this.sources.getOrDefault(source, Collections.emptySet())) {
-				updateScore(visitedSources, visitedDestinations, sourceSource, destination, hops + 1);
+				updateScore(visited, sourceSource, destination, hops + 1);
 			}
 		}
 	}

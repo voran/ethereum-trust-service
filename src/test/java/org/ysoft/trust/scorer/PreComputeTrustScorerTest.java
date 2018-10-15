@@ -35,8 +35,6 @@ public class PreComputeTrustScorerTest {
 		scorer.addTransaction("D", "B");
 		scorer.addTransaction("D", "E");
 		
-		System.out.println(scorer.recipients);
-		System.out.println(scorer.sources);
 		
 			
 		assertEquals(new HashSet<>(Arrays.asList("B")), scorer.sources.get("A"));
@@ -53,7 +51,6 @@ public class PreComputeTrustScorerTest {
 		
 		assertNull(scorer.scores.get("A:A"));
 		
-		System.out.println(scorer.scores);
 		assertEquals(1, scorer.scores.get("A:B").intValue());
 		assertEquals(1, scorer.scores.get("B:A").intValue());
 		assertEquals(1, scorer.scores.get("D:B").intValue());
